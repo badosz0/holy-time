@@ -1,0 +1,27 @@
+{
+  "name": "holy-time",
+  "version": "1.0.0",
+  "description": "Utility functions",
+  "repository": "Yet another (type-safe) date time library",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bartosz Krol <m@badosz.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@typescript-eslint/parser": "^5.9.1",
+    "eslint": "^8.6.0",
+    "eslint-import-resolver-node": "^0.3.6",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-unicorn": "^39.0.0",
+    "type-fest": "^3.0.0",
+    "typescript": "^4.8.3"
+  }
+}
