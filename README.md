@@ -46,7 +46,6 @@ new HolyTime('2022-10-20')
 
 - [ ] .set(unit, value)
 - [ ] .get(unit)
-- [ ] .format('')
 - [ ] Documentation
 
 ## License

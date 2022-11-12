@@ -1,5 +1,5 @@
 import { ValueOf } from 'type-fest';
-import { TimeUnits } from './constants';
+import { FORMAT_REGEX, MONTH_NAMES, TimeUnits } from './constants';
 
 type TimeResolvable = HolyTime | Date | number | string;
 
@@ -193,6 +193,33 @@ export default class HolyTime {
 
   public endOf(unit: IntervalUnit): HolyTime {
     return HolyTime.endOf(unit, this, this.utc);
+  }
+
+  public static format(time: TimeResolvable, format: string): string {
+    const date = HolyTime.resolveDate(time);
+
+    const values: Record<string, string> = {
+      YY: date.getUTCFullYear().toString().slice(2, 4),
+      YYYY: date.getUTCFullYear().toString(),
+      M: (date.getUTCMonth() + 1).toString(),
+      MM: (date.getUTCMonth() + 1).toString().padStart(2, '0'),
+      MMM: MONTH_NAMES[date.getUTCMonth()].slice(0, 3),
+      MMMM: MONTH_NAMES[date.getUTCMonth()],
+      D: date.getUTCDate().toString(),
+      DD: date.getUTCDate().toString().padStart(2, '0'),
+      h: date.getUTCHours().toString(),
+      hh: date.getUTCHours().toString().padStart(2, '0'),
+      m: date.getUTCMinutes().toString(),
+      mm: date.getUTCMinutes().toString().padStart(2, '0'),
+      s: date.getUTCSeconds().toString(),
+      ss: date.getUTCSeconds().toString().padStart(2, '0'),
+    };
+
+    return format.replace(FORMAT_REGEX, (match, group) => group ?? values[match] ?? '?');
+  }
+
+  public format(format: string): string {
+    return HolyTime.format(this, format);
   }
 
   public static next(unit: IntervalUnit, time: TimeResolvable = new Date(), utc = false): HolyTime {
