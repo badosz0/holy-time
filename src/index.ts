@@ -1,11 +1,8 @@
 import { ValueOf } from 'type-fest';
-import { FORMAT_REGEX, MONTH_NAMES, TimeUnits } from './constants';
+import { FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TimeUnits } from './constants';
 
 type TimeResolvable = HolyTime | Date | number | string;
-
-type HumanUnitSingle = Lowercase<keyof typeof TimeUnits>;
-type HumanUnitPlural = `${HumanUnitSingle}s`;
-type HumanUnit = HumanUnitSingle | HumanUnitPlural;
+type HumanUnit = `${Lowercase<keyof typeof TimeUnits>}s`;
 
 type IntervalUnit = 'day' | 'week' | 'month' | 'year';
 
@@ -29,11 +26,7 @@ export default class HolyTime {
   }
 
   private static getUnit(unit: HumanUnit): ValueOf<typeof TimeUnits> {
-    const key = unit.endsWith('s')
-      ? unit.toUpperCase().slice(0, -1)
-      : unit.toUpperCase();
-
-    return HolyTime.Units[key as keyof typeof HolyTime.Units];
+    return HolyTime.Units[unit.toUpperCase().slice(0, -1) as keyof typeof HolyTime.Units];
   }
 
   public static now(): HolyTime {
@@ -45,25 +38,25 @@ export default class HolyTime {
     return this;
   }
 
-  public static add(time: TimeResolvable, amount: number, unit: HumanUnit = 'millisecond'): HolyTime {
+  public static add(time: TimeResolvable, amount: number, unit: HumanUnit = 'milliseconds'): HolyTime {
     return new HolyTime(HolyTime.resolveDate(time).getTime() + (amount * HolyTime.getUnit(unit)));
   }
 
-  public add(amount: number, unit: HumanUnit = 'millisecond'): this {
+  public add(amount: number, unit: HumanUnit = 'milliseconds'): this {
     this.date = new Date(this.date.getTime() + (amount * HolyTime.getUnit(unit)));
     return this;
   }
 
-  public static subtract(time: TimeResolvable, amount: number, unit: HumanUnit = 'millisecond'): HolyTime {
+  public static subtract(time: TimeResolvable, amount: number, unit: HumanUnit = 'milliseconds'): HolyTime {
     return HolyTime.add(time, -amount, unit);
   }
 
-  public subtract(amount: number, unit: HumanUnit = 'millisecond'): this {
+  public subtract(amount: number, unit: HumanUnit = 'milliseconds'): this {
     return this.add(-amount, unit);
   }
 
-  public static in(amount: number, unit: HumanUnit = 'millisecond'): HolyTime {
-    return new HolyTime(Date.now() + (amount * HolyTime.getUnit(unit ?? 'millisecond')));
+  public static in(amount: number, unit: HumanUnit = 'milliseconds'): HolyTime {
+    return new HolyTime(Date.now() + (amount * HolyTime.getUnit(unit ?? 'milliseconds')));
   }
 
   public static equals(timeA: TimeResolvable, timeB: TimeResolvable): boolean {
@@ -222,6 +215,26 @@ export default class HolyTime {
     return HolyTime.format(this, format);
   }
 
+  public static relativeFromTo(timeA: TimeResolvable, timeB: TimeResolvable): string {
+    const differance = HolyTime.between(timeA, timeB);
+    const time = Math.max(
+      ...Object
+        .keys(RELATIVE_MAP)
+        .map(Number)
+        .filter(n => n <= differance),
+    );
+
+    const format = RELATIVE_MAP[time];
+    const future = HolyTime.isBefore(timeA, timeB);
+    const output = typeof format === 'string'
+      ? format
+      : format(differance);
+
+    return future
+      ? `in ${output}`
+      : `${output} ago`;
+  }
+
   public static next(unit: IntervalUnit, time: TimeResolvable = new Date(), utc = false): HolyTime {
     return HolyTime.endOf(unit, time, utc).add(HolyTime.Units.MILLISECOND);
   }
@@ -240,5 +253,13 @@ export default class HolyTime {
 
   public getISOString(): string {
     return this.date.toISOString();
+  }
+
+  public getRelativeTo(time: TimeResolvable): string {
+    return HolyTime.relativeFromTo(this, time);
+  }
+
+  public getRelativeFrom(time: TimeResolvable): string {
+    return HolyTime.relativeFromTo(time, this);
   }
 }
