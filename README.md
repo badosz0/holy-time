@@ -14,7 +14,7 @@ OR
 $ yarn add holy-time
 ```
 
-## Usage
+## Examples
 ```ts
 import HolyTime from 'holy-time'
 
@@ -41,12 +41,62 @@ new HolyTime('2022-10-20')
   )
 
 ```
+## Instance Methods
+```ts
+UTC(): this;
+
+add(amount: number, unit: HumanUnit): this;
+subtract(amount: number, unit: HumanUnit): this;
+
+isWeekend(): boolean;
+isAfter(time: TimeResolvable): boolean;
+isBefore(time: TimeResolvable): boolean;
+isEqual(time: TimeResolvable): boolean;
+
+startOf(unit: IntervalUnit): HolyTime;
+endOf(unit: IntervalUnit): HolyTime;
+next(unit: IntervalUnit): HolyTime;
+
+getDate(): Date;
+getTime(): number;
+getISOString(): string;
+
+format(format: string): string;
+getRelativeTo(time: TimeResolvable): string;
+getRelativeFrom(time: TimeResolvable): string;
+```
+
+## Static Methods
+```ts
+now(): HolyTime;
+in(amount: number, unit: HumanUnit): HolyTime
+
+add(time: TimeResolvable, amount: number, unit: HumanUnit): HolyTime;
+subtract(time: TimeResolvable, amount: number, unit: HumanUnit): HolyTime;
+
+between(timeA: TimeResolvable, timeB: TimeResolvable): number;
+since(time: TimeResolvable): number;
+
+isWeekend(time: TimeResolvable, utc: boolean): boolean;
+isAfter(timeA: TimeResolvable, timeB: TimeResolvable): boolean;
+isBefore(timeA: TimeResolvable, timeB: TimeResolvable): boolean;
+isEqual(timeA: TimeResolvable, timeB: TimeResolvable): boolean;
+
+max(timeA: TimeResolvable, timeB: TimeResolvable): HolyTime;
+min(timeA: TimeResolvable, timeB: TimeResolvable): HolyTime;
+
+startOf(unit: IntervalUnit, time: TimeResolvable, utc: boolean): HolyTime;
+endOf(unit: IntervalUnit, time: TimeResolvable, utc: boolean): HolyTime;
+next(unit: IntervalUnit, time: TimeResolvable, utc: boolean): HolyTime;
+
+format(time: TimeResolvable, format: string): string;
+```
+
 
 ## Planned
 
 - [ ] .set(unit, value)
 - [ ] .get(unit)
-- [ ] Documentation
 
 ## License
 

@@ -59,11 +59,11 @@ export default class HolyTime {
     return new HolyTime(Date.now() + (amount * HolyTime.getUnit(unit ?? 'milliseconds')));
   }
 
-  public static equals(timeA: TimeResolvable, timeB: TimeResolvable): boolean {
+  public static isEqual(timeA: TimeResolvable, timeB: TimeResolvable): boolean {
     return HolyTime.resolveDate(timeA).getTime() === HolyTime.resolveDate(timeB).getTime();
   }
 
-  public equals(time: TimeResolvable): boolean {
+  public isEqual(time: TimeResolvable): boolean {
     return this.date.getTime() === HolyTime.resolveDate(time).getTime();
   }
 
