@@ -4,7 +4,7 @@ import { FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TimeUnits } from './constants'
 type TimeResolvable = HolyTime | Date | number | string;
 type HumanUnit = `${Lowercase<keyof typeof TimeUnits>}s`;
 
-type IntervalUnit = 'day' | 'week' | 'month' | 'year';
+type IntervalUnit = 'hour' | 'day' | 'week' | 'month' | 'year';
 
 export default class HolyTime {
   public static Units = TimeUnits;
@@ -125,6 +125,11 @@ export default class HolyTime {
     }
 
     switch (unit) {
+      case 'hour':
+        return utc
+          ? new HolyTime(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()), utc)
+          : new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()), utc);
+
       case 'day':
         return utc
           ? new HolyTime(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()), utc)
@@ -159,6 +164,9 @@ export default class HolyTime {
     }
 
     switch (unit) {
+      case 'hour':
+        return HolyTime.startOf('hour', date, utc).add(HolyTime.Units.HOUR).subtract(HolyTime.Units.MILLISECOND);
+
       case 'day':
         return HolyTime.startOf('day', date, utc).add(HolyTime.Units.DAY).subtract(HolyTime.Units.MILLISECOND);
 
