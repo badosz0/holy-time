@@ -105,16 +105,12 @@ export default class HolyTime {
     return Date.now() - HolyTime.resolveDate(time).getTime();
   }
 
-  public static max(timeA: TimeResolvable, timeB: TimeResolvable): HolyTime {
-    return HolyTime.resolveDate(timeA).getTime() > HolyTime.resolveDate(timeB).getTime()
-      ? new HolyTime(timeA)
-      : new HolyTime(timeB);
+  public static max(...times: TimeResolvable[]): HolyTime {
+    return new HolyTime(Math.max(...times.map(time => HolyTime.resolveDate(time).getTime())));
   }
 
-  public static min(timeA: TimeResolvable, timeB: TimeResolvable): HolyTime {
-    return HolyTime.resolveDate(timeA).getTime() < HolyTime.resolveDate(timeB).getTime()
-      ? new HolyTime(timeA)
-      : new HolyTime(timeB);
+  public static min(...times: TimeResolvable[]): HolyTime {
+    return new HolyTime(Math.min(...times.map(time => HolyTime.resolveDate(time).getTime())));
   }
 
   public static startOf(unit: IntervalUnit, time: TimeResolvable = new Date(), utc = false): HolyTime {
