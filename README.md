@@ -82,8 +82,8 @@ isAfter(timeA: TimeResolvable, timeB: TimeResolvable): boolean;
 isBefore(timeA: TimeResolvable, timeB: TimeResolvable): boolean;
 isEqual(timeA: TimeResolvable, timeB: TimeResolvable): boolean;
 
-max(timeA: TimeResolvable, timeB: TimeResolvable): HolyTime;
-min(timeA: TimeResolvable, timeB: TimeResolvable): HolyTime;
+max(...times: TimeResolvable[]): HolyTime;
+min(...times: TimeResolvable[]): HolyTime;
 
 startOf(unit: IntervalUnit, time: TimeResolvable, utc: boolean): HolyTime;
 endOf(unit: IntervalUnit, time: TimeResolvable, utc: boolean): HolyTime;
