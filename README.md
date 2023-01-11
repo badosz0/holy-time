@@ -97,6 +97,8 @@ format(time: TimeResolvable, format: string): string;
 
 - [ ] .set(unit, value)
 - [ ] .get(unit)
+- [ ] .isLeapYear()
+- [ ] .toObject()
 
 ## License
 
