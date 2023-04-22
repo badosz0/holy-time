@@ -90,6 +90,7 @@ endOf(unit: IntervalUnit, time: TimeResolvable, utc: boolean): HolyTime;
 next(unit: IntervalUnit, time: TimeResolvable, utc: boolean): HolyTime;
 
 format(time: TimeResolvable, format: string): string;
+relativeFromTo(timeA: TimeResolvable, timeB: TimeResolvable): string;
 ```
 
 
