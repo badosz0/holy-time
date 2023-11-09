@@ -255,8 +255,16 @@ export default class HolyTime {
     return this.date.getTime();
   }
 
+  public getUnixTime(): number {
+    return Math.floor(this.date.getTime() / 1000);
+  }
+
   public getISOString(): string {
     return this.date.toISOString();
+  }
+
+  public clone(): HolyTime {
+    return new HolyTime(this.date, this.utc);
   }
 
   public getRelativeTo(time: TimeResolvable): string {
