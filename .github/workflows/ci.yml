@@ -1,0 +1,46 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    branches: [main]
+  workflow_dispatch:
+
+jobs: 
+  unit:
+    name: Vitest Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      matrix:
+        node-version: [16, 18, 20]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn' 
+      - name: Install all dependencies
+        run: yarn install --frozen-lockfile --immutable
+      - name: Run Vitest Unit Tests
+        run: yarn test
+
+  ci-success:
+    runs-on: ubuntu-latest
+    if: ${{ success() && github.event_name == 'push' }}
+    needs: unit
+    steps:
+      - name: ✅ CI succeeded
+        run: exit 0
+
+  ci-success-pr:
+    runs-on: ubuntu-latest
+    if: ${{ success() && github.event_name == 'pull_request' }}
+    needs: unit
+    steps:
+      - name: ✅ CI succeeded
+        run: exit 0
