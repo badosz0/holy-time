@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest watch -c ./vitest.config.ts"
   },
   "author": "Bartosz Krol <m@badosz.com>",
   "license": "MIT",
@@ -22,6 +22,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-unicorn": "^39.0.0",
     "type-fest": "^3.0.0",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.3",
+    "vitest": "^0.34.6"
   }
 }
