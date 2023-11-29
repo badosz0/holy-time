@@ -6,7 +6,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "vitest watch -c ./vitest.config.ts"
+    "test:watch": "vitest watch -c ./vitest.config.ts",
+    "test": "vitest run -c ./vitest.config.ts"
   },
   "author": "Bartosz Krol <m@badosz.com>",
   "license": "MIT",
