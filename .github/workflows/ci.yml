@@ -2,12 +2,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request_target:
-    branches: [main]
+    branches: [main, dev]
   workflow_dispatch:
 
-jobs: 
+jobs:
   unit:
     name: Vitest Unit Tests
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn' 
+          cache: "yarn"
       - name: Install all dependencies
         run: yarn install --frozen-lockfile --immutable
       - name: Run Vitest Unit Tests
