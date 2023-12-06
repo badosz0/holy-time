@@ -1,5 +1,5 @@
 import { ValueOf } from 'type-fest';
-import { FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TimeUnits } from './constants';
+import { FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TIMEZONE_MAP, TimeUnits, TimeZone } from './constants';
 
 type TimeResolvable = HolyTime | Date | number | string;
 type HumanUnit = `${Lowercase<keyof typeof TimeUnits>}s`;
@@ -21,6 +21,16 @@ export default class HolyTime {
       : time instanceof HolyTime
         ? time.getDate()
         : new Date(time);
+  }
+
+  private static adjustToTimeZone(date: Date, timeZone?: TimeZone): Date {
+    if (!timeZone) {
+      return date;
+    }
+
+    timeZone = TIMEZONE_MAP[timeZone] ?? timeZone;
+
+    return new Date(date.toLocaleString('en-US', { timeZone }));
   }
 
   private static getUnit(unit: HumanUnit): ValueOf<typeof TimeUnits> {
@@ -132,64 +142,65 @@ export default class HolyTime {
     return new HolyTime(Math.min(...times.map(time => HolyTime.resolveDate(time).getTime())));
   }
 
-  public static startOf(unit: IntervalUnit, time: TimeResolvable = new Date()): HolyTime {
-    const date = HolyTime.resolveDate(time);
+  public static startOf(unit: IntervalUnit, time: TimeResolvable = new Date(), timeZone?: TimeZone): HolyTime {
+    const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
+    const offset = HolyTime.between(date, time);
 
     switch (unit) {
       case 'hour':
-
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()));
+        return new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours())).add(offset);
 
       case 'day':
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
+        return new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate())).add(offset);
 
       case 'week':
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate())).subtract(date.getDay(), 'days');
+        return new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate())).subtract(date.getDay(), 'days').add(offset);
 
       case 'month':
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth()));
+        return new HolyTime(new Date(date.getFullYear(), date.getMonth())).add(offset);
 
       case 'year':
-        return new HolyTime(new Date(date.getFullYear(), 0));
+        return new HolyTime(new Date(date.getFullYear(), 0)).add(offset);
     }
   }
 
-  public startOf(unit: IntervalUnit): HolyTime {
-    return HolyTime.startOf(unit, this);
+  public startOf(unit: IntervalUnit, timeZone?: TimeZone): HolyTime {
+    return HolyTime.startOf(unit, this, timeZone);
   }
 
-  public static endOf(unit: IntervalUnit, time: TimeResolvable = new Date()): HolyTime {
-    const date = HolyTime.resolveDate(time);
+  public static endOf(unit: IntervalUnit, time: TimeResolvable = new Date(), timeZone?: TimeZone): HolyTime {
+    const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
+    const offset = HolyTime.between(date, time);
 
     switch (unit) {
       case 'hour':
-        return HolyTime.startOf('hour', date).add(HolyTime.Units.HOUR).subtract(HolyTime.Units.MILLISECOND);
+        return HolyTime.startOf('hour', date).add(HolyTime.Units.HOUR).subtract(HolyTime.Units.MILLISECOND).add(offset);
 
       case 'day':
-        return HolyTime.startOf('day', date).add(HolyTime.Units.DAY).subtract(HolyTime.Units.MILLISECOND);
+        return HolyTime.startOf('day', date).add(HolyTime.Units.DAY).subtract(HolyTime.Units.MILLISECOND).add(offset);
 
       case 'week':
-        return HolyTime.startOf('week', date).add(HolyTime.Units.WEEK).subtract(HolyTime.Units.MILLISECOND);
+        return HolyTime.startOf('week', date).add(HolyTime.Units.WEEK).subtract(HolyTime.Units.MILLISECOND).add(offset);
 
       case 'month': {
         if (date.getMonth() === 11) {
-          return new HolyTime(new Date(date.getFullYear() + 1, 0)).subtract(HolyTime.Units.MILLISECOND);
+          return new HolyTime(new Date(date.getFullYear() + 1, 0)).subtract(HolyTime.Units.MILLISECOND).add(offset);
         }
 
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth() + 1)).subtract(HolyTime.Units.MILLISECOND);
+        return new HolyTime(new Date(date.getFullYear(), date.getMonth() + 1)).subtract(HolyTime.Units.MILLISECOND).add(offset);
       }
 
       case 'year':
-        return new HolyTime(new Date(date.getFullYear() + 1, 0)).subtract(HolyTime.Units.MILLISECOND);
+        return new HolyTime(new Date(date.getFullYear() + 1, 0)).subtract(HolyTime.Units.MILLISECOND).add(offset);
     }
   }
 
-  public endOf(unit: IntervalUnit): HolyTime {
-    return HolyTime.endOf(unit, this);
+  public endOf(unit: IntervalUnit, timeZone?: TimeZone): HolyTime {
+    return HolyTime.endOf(unit, this, timeZone);
   }
 
-  public static format(time: TimeResolvable, format: string): string {
-    const date = HolyTime.resolveDate(time);
+  public static format(time: TimeResolvable, format: string, timeZone?: TimeZone): string {
+    const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
 
     const values: Record<string, string> = {
       YY: date.getFullYear().toString().slice(2, 4),
@@ -211,8 +222,8 @@ export default class HolyTime {
     return format.replace(FORMAT_REGEX, (match, group) => group ?? values[match] ?? '?');
   }
 
-  public format(format: string): string {
-    return HolyTime.format(this, format);
+  public format(format: string, timeZone?: TimeZone): string {
+    return HolyTime.format(this, format, timeZone);
   }
 
   public static relativeFromTo(timeA: TimeResolvable, timeB: TimeResolvable): string {
@@ -235,12 +246,12 @@ export default class HolyTime {
       : `${output} ago`;
   }
 
-  public static next(unit: IntervalUnit, time: TimeResolvable = new Date()): HolyTime {
-    return HolyTime.endOf(unit, time).add(HolyTime.Units.MILLISECOND);
+  public static next(unit: IntervalUnit, time: TimeResolvable = new Date(), timeZone?: TimeZone): HolyTime {
+    return HolyTime.endOf(unit, time, timeZone).add(HolyTime.Units.MILLISECOND);
   }
 
-  public next(unit: IntervalUnit): HolyTime {
-    return HolyTime.next(unit, this);
+  public next(unit: IntervalUnit, timeZone?: TimeZone): HolyTime {
+    return HolyTime.next(unit, this, timeZone);
   }
 
   public getDate(): Date {
@@ -271,3 +282,4 @@ export default class HolyTime {
     return HolyTime.relativeFromTo(time, this);
   }
 }
+
