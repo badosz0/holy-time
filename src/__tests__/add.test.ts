@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import HolyTime from '..';
 
-describe('general', () => {
+describe('test HolyTime.add', () => {
   it('should handle adding zero', () => {
     const date = new HolyTime(new Date('2023-01-01T00:00:00.000Z'));
     expect(date.add(0, 'milliseconds').getTime()).toBe(date.getTime());

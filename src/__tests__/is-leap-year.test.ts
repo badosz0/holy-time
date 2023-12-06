@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import HolyTime from '..';
 
-describe('isLeapYear', () => {
+describe('test HolyTime.isLeapYear', () => {
   it('should return true for leap years', () => {
     expect(HolyTime.isLeapYear(2020)).toBe(true);
     expect(HolyTime.isLeapYear(2000)).toBe(true); // Century leap year

@@ -1,12 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import HolyTime from '..';
 
-describe('format', () => {
+describe('test HolyTime.format without timeZone', () => {
   it('should format date', () => {
     const date = new HolyTime(new Date('2023-01-01T13:45:30.000Z'));
-    const format = 'YYYY-MM-DD hh:mm:ss';
 
-    expect(date.format(format)).toBe('2023-01-01 13:45:30');
+    expect(date.format('YYYY-MM-DD hh:mm:ss')).toBe('2023-01-01 13:45:30');
   });
 
   it('should format year', () => {
@@ -60,5 +59,32 @@ describe('format', () => {
   it('should handle empty format string correctly', () => {
     const date = new HolyTime(new Date('2023-01-01T00:00:00.000Z'));
     expect(date.format('')).toBe('');
+  });
+});
+
+describe('test HolyTime.format with timeZone', () => {
+  it('should format date from UTC to America/New_York with 4h difference', () => {
+    const date = new HolyTime(new Date('2023-04-01T00:00:00.000Z'));
+
+    expect(date.format('YYYY-MM-DD hh:mm:ss', 'America/New_York')).toBe('2023-03-31 20:00:00');
+  });
+
+  it('should format date from UTC to America/New_York with 5h difference', () => {
+    const date = new HolyTime(new Date('2023-08-01T00:00:00.000Z'));
+    const format = 'YYYY-MM-DD hh:mm:ss';
+
+    expect(date.format(format, 'America/New_York')).toBe('2023-07-31 20:00:00');
+  });
+
+  it('should format date from UTC to America/New_York with 6h difference', () => {
+    const date = new HolyTime(new Date('2023-12-01T00:00:00.000Z'));
+
+    expect(date.format('YYYY-MM-DD hh:mm:ss', 'America/New_York')).toBe('2023-11-30 19:00:00');
+  });
+
+  it('should format date from UTC to Europe/Berlin with 1h difference', () => {
+    const date = new HolyTime(new Date('2023-04-01T00:00:00.000Z'));
+
+    expect(date.format('YYYY-MM-DD hh:mm:ss', 'Europe/Berlin')).toBe('2023-04-01 02:00:00');
   });
 });
