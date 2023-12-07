@@ -34,7 +34,13 @@ export default class HolyTime {
   }
 
   private static getUnit(unit: HumanUnit): ValueOf<typeof TimeUnits> {
-    return HolyTime.Units[unit.toUpperCase().slice(0, -1) as keyof typeof HolyTime.Units];
+    const unitKey = unit.toUpperCase().slice(0, -1) as keyof typeof HolyTime.Units;
+
+    if (!HolyTime.Units.hasOwnProperty(unitKey)) {
+      throw new Error(`Invalid unit: ${unit}`);
+    }
+
+    return HolyTime.Units[unitKey];
   }
 
   public static now(): HolyTime {
@@ -80,6 +86,29 @@ export default class HolyTime {
 
   public isWeekend(): boolean {
     return HolyTime.isWeekend(this);
+  }
+
+  /**
+    * Determines if a given year is a leap year.
+    *
+    * A leap year is a year that is divisible by 4, except for end-of-century years,
+    * which must be divisible by 400. This means that the year 2000 was a leap year,
+    * although 1900 was not.
+    */
+  public static isLeapYear(year: number): boolean {
+    if (typeof year !== 'number' || Number.isNaN(year) || !Number.isFinite(year)) {
+      throw new TypeError('Invalid input: Year must be a finite number');
+    }
+
+    if (year < 0 || !Number.isInteger(year)) {
+      throw new Error('Invalid input: Year must be a positive integer');
+    }
+
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  }
+
+  public isLeapYear(time: TimeResolvable): boolean {
+    return HolyTime.isLeapYear(HolyTime.resolveDate(time).getFullYear());
   }
 
   public static between(timeA: TimeResolvable, timeB: TimeResolvable): number {
