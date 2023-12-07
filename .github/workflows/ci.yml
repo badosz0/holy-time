@@ -28,19 +28,3 @@ jobs:
         run: yarn install --frozen-lockfile --immutable
       - name: Run Vitest Unit Tests
         run: yarn test
-
-  ci-success:
-    runs-on: ubuntu-latest
-    if: ${{ success() && github.event_name == 'push' }}
-    needs: unit
-    steps:
-      - name: ✅ CI succeeded
-        run: exit 0
-
-  ci-success-pr:
-    runs-on: ubuntu-latest
-    if: ${{ success() && github.event_name == 'pull_request' }}
-    needs: unit
-    steps:
-      - name: ✅ CI succeeded
-        run: exit 0
