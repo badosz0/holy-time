@@ -29,7 +29,7 @@ export const RELATIVE_MAP: Record<number, string | ((milliseconds: number) => st
   [TimeUnits.YEAR * 2]: (milliseconds) => `${Math.floor(milliseconds / TimeUnits.YEAR)} years`,
 };
 
-const TIMEZONES = [
+export const TIMEZONES = [
   'Africa/Abidjan',
   'Africa/Accra',
   'Africa/Addis_Ababa',

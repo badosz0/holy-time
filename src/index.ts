@@ -1,5 +1,5 @@
 import { ValueOf } from 'type-fest';
-import { FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TIMEZONE_MAP, TimeUnits, TimeZone } from './constants';
+import { FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TIMEZONES, TIMEZONE_MAP, TimeUnits, TimeZone } from './constants';
 
 type TimeResolvable = HolyTime | Date | number | string;
 type HumanUnit = `${Lowercase<keyof typeof TimeUnits>}s`;
@@ -8,6 +8,7 @@ type IntervalUnit = 'hour' | 'day' | 'week' | 'month' | 'year';
 
 export default class HolyTime {
   public static Units = TimeUnits;
+  public static TimeZones = TIMEZONES;
   private date: Date;
 
   constructor(initialDate: TimeResolvable = new Date()) {
@@ -284,3 +285,4 @@ export default class HolyTime {
   }
 }
 
+export { TimeZone } from './constants';
