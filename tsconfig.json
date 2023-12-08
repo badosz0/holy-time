@@ -9,7 +9,8 @@
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["esnext", "esnext.asynciterable"],
-    "types": ["node"]
+    "types": ["node"],
+    "skipLibCheck": true
   },
   "include": ["src/", "./vitest.config.ts"],
   "exclude": ["node_modules/"]
