@@ -1,4 +1,9 @@
-#  Holy Time 🕑🙏
+![holyTime](https://github.com/tomcru/holy-time/assets/35841182/51051dd9-d0db-4bf7-9cbd-21bcc8c98fd5)
+
+<h1>Holy Time</h1>
+<a href="https://www.npmjs.com/package/holy-time"><img src="https://img.shields.io/npm/v/holy-time.svg?style=flat" /></a>
+<br>
+<br>
 
 > Yet another (type-safe) date time library
 
