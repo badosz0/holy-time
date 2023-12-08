@@ -1,13 +1,13 @@
 {
   "name": "holy-time",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Utility functions",
   "repository": "Yet another (type-safe) date time library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test:watch": "TZ=UTC vitest watch -c ./vitest.config.ts",
-    "test": "TZ=UTC vitest run -c ./vitest.config.ts"
+    "test:watch": "TZ=UTC vitest watch -c ./src/vitest.config.ts",
+    "test": "TZ=UTC vitest run -c ./src/vitest.config.ts"
   },
   "author": "Bartosz Krol <m@badosz.com>",
   "license": "MIT",
