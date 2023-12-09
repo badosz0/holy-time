@@ -8,8 +8,9 @@
   "scripts": {
     "test:watch": "TZ=UTC vitest watch -c ./src/vitest.config.ts",
     "test": "TZ=UTC vitest run -c ./src/vitest.config.ts",
+    "lint": "eslint --ignore-path .gitignore --ext .ts .",
     "lint:fix": "eslint --ignore-path .gitignore --ext .ts . --fix && npm run format:fix",
-    "format:fix": "prettier --ignore-path .gitignore --write \"**/*.+(ts)\""
+    "format:fix": "prettier --ignore-path .gitignore --write \"**/*.+(ts|json)\""
   },
   "author": "Bartosz Krol <m@badosz.com>",
   "license": "MIT",
