@@ -47,12 +47,16 @@ describe('test HolyTime.subtract', () => {
     const date = new HolyTime(new Date('2023-01-01T00:00:00.000Z'));
     const yearInMs = 1000 * 60 * 60 * 24 * 365;
     const expected = new Date('2013-01-03T00:00:00.000Z'); // 2 leap years == -2 days
-    expect(date.subtract(10 * yearInMs, 'milliseconds').getDate()).toEqual(expected);
+    expect(date.subtract(10 * yearInMs, 'milliseconds').getDate()).toEqual(
+      expected,
+    );
   });
 
   it('should handle subtracting with non-standard units', () => {
     const date = new HolyTime(new Date('2023-01-01T00:00:00.000Z'));
     // @ts-expect-error
-    expect(() => date.subtract(1, 'nonStandardUnit')).toThrow('Invalid unit: nonStandardUnit');
+    expect(() => date.subtract(1, 'nonStandardUnit')).toThrow(
+      'Invalid unit: nonStandardUnit',
+    );
   });
 });

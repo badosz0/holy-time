@@ -53,6 +53,8 @@ describe('test HolyTime.add', () => {
   it('should handle adding with non-standard units', () => {
     const date = new HolyTime(new Date('2023-01-01T00:00:00.000Z'));
     // @ts-expect-error
-    expect(() => date.add(1, 'nonStandardUnit')).toThrow('Invalid unit: nonStandardUnit');
+    expect(() => date.add(1, 'nonStandardUnit')).toThrow(
+      'Invalid unit: nonStandardUnit',
+    );
   });
 });

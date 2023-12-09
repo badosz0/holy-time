@@ -1,5 +1,13 @@
 import { ValueOf } from 'type-fest';
-import { FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TIMEZONES, TIMEZONE_MAP, TimeUnits, TimeZone } from './constants';
+import {
+  FORMAT_REGEX,
+  MONTH_NAMES,
+  RELATIVE_MAP,
+  TIMEZONES,
+  TIMEZONE_MAP,
+  TimeUnits,
+  TimeZone,
+} from './constants';
 
 type TimeResolvable = HolyTime | Date | number | string;
 type HumanUnit = `${Lowercase<keyof typeof TimeUnits>}s`;
@@ -35,7 +43,9 @@ export default class HolyTime {
   }
 
   private static getUnit(unit: HumanUnit): ValueOf<typeof TimeUnits> {
-    const unitKey = unit.toUpperCase().slice(0, -1) as keyof typeof HolyTime.Units;
+    const unitKey = unit
+      .toUpperCase()
+      .slice(0, -1) as keyof typeof HolyTime.Units;
 
     if (!HolyTime.Units.hasOwnProperty(unitKey)) {
       throw new Error(`Invalid unit: ${unit}`);
@@ -48,16 +58,26 @@ export default class HolyTime {
     return new HolyTime();
   }
 
-  public static add(time: TimeResolvable, amount: number, unit: HumanUnit = 'milliseconds'): HolyTime {
-    return new HolyTime(HolyTime.resolveDate(time).getTime() + (amount * HolyTime.getUnit(unit)));
+  public static add(
+    time: TimeResolvable,
+    amount: number,
+    unit: HumanUnit = 'milliseconds',
+  ): HolyTime {
+    return new HolyTime(
+      HolyTime.resolveDate(time).getTime() + amount * HolyTime.getUnit(unit),
+    );
   }
 
   public add(amount: number, unit: HumanUnit = 'milliseconds'): this {
-    this.date = new Date(this.date.getTime() + (amount * HolyTime.getUnit(unit)));
+    this.date = new Date(this.date.getTime() + amount * HolyTime.getUnit(unit));
     return this;
   }
 
-  public static subtract(time: TimeResolvable, amount: number, unit: HumanUnit = 'milliseconds'): HolyTime {
+  public static subtract(
+    time: TimeResolvable,
+    amount: number,
+    unit: HumanUnit = 'milliseconds',
+  ): HolyTime {
     return HolyTime.add(time, -amount, unit);
   }
 
@@ -66,11 +86,16 @@ export default class HolyTime {
   }
 
   public static in(amount: number, unit: HumanUnit = 'milliseconds'): HolyTime {
-    return new HolyTime(Date.now() + (amount * HolyTime.getUnit(unit ?? 'milliseconds')));
+    return new HolyTime(
+      Date.now() + amount * HolyTime.getUnit(unit ?? 'milliseconds'),
+    );
   }
 
   public static isEqual(timeA: TimeResolvable, timeB: TimeResolvable): boolean {
-    return HolyTime.resolveDate(timeA).getTime() === HolyTime.resolveDate(timeB).getTime();
+    return (
+      HolyTime.resolveDate(timeA).getTime() ===
+      HolyTime.resolveDate(timeB).getTime()
+    );
   }
 
   public isEqual(time: TimeResolvable): boolean {
@@ -90,14 +115,18 @@ export default class HolyTime {
   }
 
   /**
-    * Determines if a given year is a leap year.
-    *
-    * A leap year is a year that is divisible by 4, except for end-of-century years,
-    * which must be divisible by 400. This means that the year 2000 was a leap year,
-    * although 1900 was not.
-    */
+   * Determines if a given year is a leap year.
+   *
+   * A leap year is a year that is divisible by 4, except for end-of-century years,
+   * which must be divisible by 400. This means that the year 2000 was a leap year,
+   * although 1900 was not.
+   */
   public static isLeapYear(year: number): boolean {
-    if (typeof year !== 'number' || Number.isNaN(year) || !Number.isFinite(year)) {
+    if (
+      typeof year !== 'number' ||
+      Number.isNaN(year) ||
+      !Number.isFinite(year)
+    ) {
       throw new TypeError('Invalid input: Year must be a finite number');
     }
 
@@ -113,19 +142,31 @@ export default class HolyTime {
   }
 
   public static between(timeA: TimeResolvable, timeB: TimeResolvable): number {
-    return Math.abs(HolyTime.resolveDate(timeA).getTime() - HolyTime.resolveDate(timeB).getTime());
+    return Math.abs(
+      HolyTime.resolveDate(timeA).getTime() -
+        HolyTime.resolveDate(timeB).getTime(),
+    );
   }
 
   public static isAfter(timeA: TimeResolvable, timeB: TimeResolvable): boolean {
-    return HolyTime.resolveDate(timeA).getTime() > HolyTime.resolveDate(timeB).getTime();
+    return (
+      HolyTime.resolveDate(timeA).getTime() >
+      HolyTime.resolveDate(timeB).getTime()
+    );
   }
 
   public isAfter(time: TimeResolvable): boolean {
     return this.date.getTime() > HolyTime.resolveDate(time).getTime();
   }
 
-  public static isBefore(timeA: TimeResolvable, timeB: TimeResolvable): boolean {
-    return HolyTime.resolveDate(timeA).getTime() < HolyTime.resolveDate(timeB).getTime();
+  public static isBefore(
+    timeA: TimeResolvable,
+    timeB: TimeResolvable,
+  ): boolean {
+    return (
+      HolyTime.resolveDate(timeA).getTime() <
+      HolyTime.resolveDate(timeB).getTime()
+    );
   }
 
   public isBefore(time: TimeResolvable): boolean {
@@ -137,29 +178,55 @@ export default class HolyTime {
   }
 
   public static max(...times: TimeResolvable[]): HolyTime {
-    return new HolyTime(Math.max(...times.map(time => HolyTime.resolveDate(time).getTime())));
+    return new HolyTime(
+      Math.max(...times.map((time) => HolyTime.resolveDate(time).getTime())),
+    );
   }
 
   public static min(...times: TimeResolvable[]): HolyTime {
-    return new HolyTime(Math.min(...times.map(time => HolyTime.resolveDate(time).getTime())));
+    return new HolyTime(
+      Math.min(...times.map((time) => HolyTime.resolveDate(time).getTime())),
+    );
   }
 
-  public static startOf(unit: IntervalUnit, time: TimeResolvable = new Date(), timeZone?: TimeZone): HolyTime {
-    const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
+  public static startOf(
+    unit: IntervalUnit,
+    time: TimeResolvable = new Date(),
+    timeZone?: TimeZone,
+  ): HolyTime {
+    const date = HolyTime.adjustToTimeZone(
+      HolyTime.resolveDate(time),
+      timeZone,
+    );
     const offset = HolyTime.between(date, time);
 
     switch (unit) {
       case 'hour':
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours())).add(offset);
+        return new HolyTime(
+          new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(),
+          ),
+        ).add(offset);
 
       case 'day':
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate())).add(offset);
+        return new HolyTime(
+          new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+        ).add(offset);
 
       case 'week':
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth(), date.getDate())).subtract(date.getDay(), 'days').add(offset);
+        return new HolyTime(
+          new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+        )
+          .subtract(date.getDay(), 'days')
+          .add(offset);
 
       case 'month':
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth())).add(offset);
+        return new HolyTime(new Date(date.getFullYear(), date.getMonth())).add(
+          offset,
+        );
 
       case 'year':
         return new HolyTime(new Date(date.getFullYear(), 0)).add(offset);
@@ -170,30 +237,52 @@ export default class HolyTime {
     return HolyTime.startOf(unit, this, timeZone);
   }
 
-  public static endOf(unit: IntervalUnit, time: TimeResolvable = new Date(), timeZone?: TimeZone): HolyTime {
-    const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
+  public static endOf(
+    unit: IntervalUnit,
+    time: TimeResolvable = new Date(),
+    timeZone?: TimeZone,
+  ): HolyTime {
+    const date = HolyTime.adjustToTimeZone(
+      HolyTime.resolveDate(time),
+      timeZone,
+    );
     const offset = HolyTime.between(date, time);
 
     switch (unit) {
       case 'hour':
-        return HolyTime.startOf('hour', date).add(HolyTime.Units.HOUR).subtract(HolyTime.Units.MILLISECOND).add(offset);
+        return HolyTime.startOf('hour', date)
+          .add(HolyTime.Units.HOUR)
+          .subtract(HolyTime.Units.MILLISECOND)
+          .add(offset);
 
       case 'day':
-        return HolyTime.startOf('day', date).add(HolyTime.Units.DAY).subtract(HolyTime.Units.MILLISECOND).add(offset);
+        return HolyTime.startOf('day', date)
+          .add(HolyTime.Units.DAY)
+          .subtract(HolyTime.Units.MILLISECOND)
+          .add(offset);
 
       case 'week':
-        return HolyTime.startOf('week', date).add(HolyTime.Units.WEEK).subtract(HolyTime.Units.MILLISECOND).add(offset);
+        return HolyTime.startOf('week', date)
+          .add(HolyTime.Units.WEEK)
+          .subtract(HolyTime.Units.MILLISECOND)
+          .add(offset);
 
       case 'month': {
         if (date.getMonth() === 11) {
-          return new HolyTime(new Date(date.getFullYear() + 1, 0)).subtract(HolyTime.Units.MILLISECOND).add(offset);
+          return new HolyTime(new Date(date.getFullYear() + 1, 0))
+            .subtract(HolyTime.Units.MILLISECOND)
+            .add(offset);
         }
 
-        return new HolyTime(new Date(date.getFullYear(), date.getMonth() + 1)).subtract(HolyTime.Units.MILLISECOND).add(offset);
+        return new HolyTime(new Date(date.getFullYear(), date.getMonth() + 1))
+          .subtract(HolyTime.Units.MILLISECOND)
+          .add(offset);
       }
 
       case 'year':
-        return new HolyTime(new Date(date.getFullYear() + 1, 0)).subtract(HolyTime.Units.MILLISECOND).add(offset);
+        return new HolyTime(new Date(date.getFullYear() + 1, 0))
+          .subtract(HolyTime.Units.MILLISECOND)
+          .add(offset);
     }
   }
 
@@ -201,8 +290,15 @@ export default class HolyTime {
     return HolyTime.endOf(unit, this, timeZone);
   }
 
-  public static format(time: TimeResolvable, format: string, timeZone?: TimeZone): string {
-    const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
+  public static format(
+    time: TimeResolvable,
+    format: string,
+    timeZone?: TimeZone,
+  ): string {
+    const date = HolyTime.adjustToTimeZone(
+      HolyTime.resolveDate(time),
+      timeZone,
+    );
 
     const values: Record<string, string> = {
       YY: date.getFullYear().toString().slice(2, 4),
@@ -221,34 +317,39 @@ export default class HolyTime {
       ss: date.getSeconds().toString().padStart(2, '0'),
     };
 
-    return format.replace(FORMAT_REGEX, (match, group) => group ?? values[match] ?? '?');
+    return format.replace(
+      FORMAT_REGEX,
+      (match, group) => group ?? values[match] ?? '?',
+    );
   }
 
   public format(format: string, timeZone?: TimeZone): string {
     return HolyTime.format(this, format, timeZone);
   }
 
-  public static relativeFromTo(timeA: TimeResolvable, timeB: TimeResolvable): string {
+  public static relativeFromTo(
+    timeA: TimeResolvable,
+    timeB: TimeResolvable,
+  ): string {
     const differance = HolyTime.between(timeA, timeB);
     const time = Math.max(
-      ...Object
-        .keys(RELATIVE_MAP)
+      ...Object.keys(RELATIVE_MAP)
         .map(Number)
-        .filter(n => n <= differance),
+        .filter((n) => n <= differance),
     );
 
     const format = RELATIVE_MAP[time];
     const future = HolyTime.isBefore(timeA, timeB);
-    const output = typeof format === 'string'
-      ? format
-      : format(differance);
+    const output = typeof format === 'string' ? format : format(differance);
 
-    return future
-      ? `in ${output}`
-      : `${output} ago`;
+    return future ? `in ${output}` : `${output} ago`;
   }
 
-  public static next(unit: IntervalUnit, time: TimeResolvable = new Date(), timeZone?: TimeZone): HolyTime {
+  public static next(
+    unit: IntervalUnit,
+    time: TimeResolvable = new Date(),
+    timeZone?: TimeZone,
+  ): HolyTime {
     return HolyTime.endOf(unit, time, timeZone).add(HolyTime.Units.MILLISECOND);
   }
 
