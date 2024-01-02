@@ -1,6 +1,6 @@
 {
   "name": "holy-time",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "description": "Utility functions",
   "repository": "Yet another (type-safe) date time library",
   "main": "dist/index.js",

@@ -1,6 +1,7 @@
 import { ValueOf } from 'type-fest';
 import { FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TIMEZONES, TIMEZONE_MAP, TimeUnits, TimeZone } from './constants';
 import { HumanUnit, IntervalUnit, TimeResolvable } from './types';
+import { HolyDuration } from './duration';
 
 export class HolyTime {
   public static Units = TimeUnits;
@@ -30,7 +31,7 @@ export class HolyTime {
     return new Date(date.toLocaleString('en-US', { timeZone }));
   }
 
-  private static getUnit(unit: HumanUnit): ValueOf<typeof TimeUnits> {
+  private static getUnit(unit: HumanUnit): ValueOf<typeof HolyTime.Units> {
     const unitKey = unit.toUpperCase().slice(0, -1) as keyof typeof HolyTime.Units;
 
     if (!HolyTime.Units.hasOwnProperty(unitKey)) {
@@ -252,6 +253,10 @@ export class HolyTime {
     return HolyTime.next(unit, this, timeZone);
   }
 
+  public static duration(amount: number, unit: HumanUnit = 'milliseconds'): HolyDuration {
+    return new HolyDuration(amount * HolyTime.getUnit(unit));
+  }
+
   public getDate(): Date {
     return this.date;
   }
@@ -280,3 +285,4 @@ export class HolyTime {
     return HolyTime.relativeFromTo(time, this);
   }
 }
+
