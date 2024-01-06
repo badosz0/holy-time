@@ -44,6 +44,11 @@ new HolyTime('2022-10-20')
     )
   )
 
+HolyTime
+  .duration(2, 'hours')
+  .add(30, 'minutes')
+  .in('seconds')
+
 ```
 ## Instance Methods
 ```ts
@@ -95,6 +100,8 @@ next(unit: IntervalUnit, time: TimeResolvable, timeZone?: TimeZone): HolyTime;
 
 format(time: TimeResolvable, format: string, timeZone?: TimeZone): string;
 relativeFromTo(timeA: TimeResolvable, timeB: TimeResolvable): string;
+
+duration(amount: number, unit: HumanUnit): HolyDuration;
 ```
 
 
