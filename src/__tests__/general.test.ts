@@ -105,4 +105,3 @@ describe('test HolyTime.min', () => {
     expect(HolyTime.min(date, date2)).toStrictEqual(date);
   });
 });
-

@@ -16,23 +16,69 @@ describe('test HolyTime.endOf', () => {
 describe('test endOf with timeZone', () => {
   it('should return end of unit in timeZone', () => {
     const date = new HolyTime(new Date('2023-01-01T01:02:03.000Z'));
-    expect(date.endOf('hour', 'America/New_York').format('YYYY-MM-DD HH:mm:ss')).toBe('2023-01-01 01:59:59');
-    expect(date.endOf('hour', 'America/New_York').format('YYYY-MM-DD HH:mm:ss', 'Europe/Berlin')).toBe('2023-01-01 02:59:59');
+    expect(
+      date.endOf('hour', 'America/New_York').format('YYYY-MM-DD HH:mm:ss'),
+    ).toBe('2023-01-01 01:59:59');
+    expect(
+      date
+        .endOf('hour', 'America/New_York')
+        .format('YYYY-MM-DD HH:mm:ss', 'Europe/Berlin'),
+    ).toBe('2023-01-01 02:59:59');
 
-    expect(date.endOf('day', 'Europe/London').format('YYYY-MM-DD HH:mm:ss')).toBe('2023-01-01 23:59:59');
-    expect(date.endOf('day', 'America/New_York').format('YYYY-MM-DD HH:mm:ss', 'Europe/London')).toBe('2023-01-01 04:59:59');
-    expect(date.endOf('day', 'Europe/Berlin').format('YYYY-MM-DD HH:mm:ss', 'America/New_York')).toBe('2023-01-01 19:59:59');
+    expect(
+      date.endOf('day', 'Europe/London').format('YYYY-MM-DD HH:mm:ss'),
+    ).toBe('2023-01-01 23:59:59');
+    expect(
+      date
+        .endOf('day', 'America/New_York')
+        .format('YYYY-MM-DD HH:mm:ss', 'Europe/London'),
+    ).toBe('2023-01-01 04:59:59');
+    expect(
+      date
+        .endOf('day', 'Europe/Berlin')
+        .format('YYYY-MM-DD HH:mm:ss', 'America/New_York'),
+    ).toBe('2023-01-01 19:59:59');
 
-    expect(date.endOf('week', 'Europe/London').format('YYYY-MM-DD HH:mm:ss')).toBe('2023-01-07 23:59:59');
-    expect(date.endOf('week', 'Europe/London').format('YYYY-MM-DD HH:mm:ss', 'America/New_York')).toBe('2023-01-07 18:59:59');
-    expect(date.endOf('week', 'America/New_York').format('YYYY-MM-DD HH:mm:ss', 'Europe/London')).toBe('2023-01-01 04:59:59');
+    expect(
+      date.endOf('week', 'Europe/London').format('YYYY-MM-DD HH:mm:ss'),
+    ).toBe('2023-01-07 23:59:59');
+    expect(
+      date
+        .endOf('week', 'Europe/London')
+        .format('YYYY-MM-DD HH:mm:ss', 'America/New_York'),
+    ).toBe('2023-01-07 18:59:59');
+    expect(
+      date
+        .endOf('week', 'America/New_York')
+        .format('YYYY-MM-DD HH:mm:ss', 'Europe/London'),
+    ).toBe('2023-01-01 04:59:59');
 
-    expect(date.endOf('month', 'Europe/London').format('YYYY-MM-DD HH:mm:ss')).toBe('2023-01-31 23:59:59');
-    expect(date.endOf('month', 'Europe/London').format('YYYY-MM-DD HH:mm:ss', 'America/New_York')).toBe('2023-01-31 18:59:59');
-    expect(date.endOf('month', 'America/New_York').format('YYYY-MM-DD HH:mm:ss', 'Europe/London')).toBe('2023-01-01 04:59:59');
+    expect(
+      date.endOf('month', 'Europe/London').format('YYYY-MM-DD HH:mm:ss'),
+    ).toBe('2023-01-31 23:59:59');
+    expect(
+      date
+        .endOf('month', 'Europe/London')
+        .format('YYYY-MM-DD HH:mm:ss', 'America/New_York'),
+    ).toBe('2023-01-31 18:59:59');
+    expect(
+      date
+        .endOf('month', 'America/New_York')
+        .format('YYYY-MM-DD HH:mm:ss', 'Europe/London'),
+    ).toBe('2023-01-01 04:59:59');
 
-    expect(date.endOf('year', 'Europe/London').format('YYYY-MM-DD HH:mm:ss')).toBe('2023-12-31 23:59:59');
-    expect(date.endOf('year', 'Europe/London').format('YYYY-MM-DD HH:mm:ss', 'America/New_York')).toBe('2023-12-31 18:59:59');
-    expect(date.endOf('year', 'America/New_York').format('YYYY-MM-DD HH:mm:ss', 'Europe/London')).toBe('2023-01-01 04:59:59');
+    expect(
+      date.endOf('year', 'Europe/London').format('YYYY-MM-DD HH:mm:ss'),
+    ).toBe('2023-12-31 23:59:59');
+    expect(
+      date
+        .endOf('year', 'Europe/London')
+        .format('YYYY-MM-DD HH:mm:ss', 'America/New_York'),
+    ).toBe('2023-12-31 18:59:59');
+    expect(
+      date
+        .endOf('year', 'America/New_York')
+        .format('YYYY-MM-DD HH:mm:ss', 'Europe/London'),
+    ).toBe('2023-01-01 04:59:59');
   });
 });

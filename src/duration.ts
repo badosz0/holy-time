@@ -10,7 +10,9 @@ export class HolyDuration {
   }
 
   private static getUnit(unit: HumanUnit): ValueOf<typeof HolyTime.Units> {
-    const unitKey = unit.toUpperCase().slice(0, -1) as keyof typeof HolyTime.Units;
+    const unitKey = unit
+      .toUpperCase()
+      .slice(0, -1) as keyof typeof HolyTime.Units;
 
     if (!HolyTime.Units.hasOwnProperty(unitKey)) {
       throw new Error(`Invalid unit: ${unit}`);
@@ -32,4 +34,3 @@ export class HolyDuration {
     return this.milliseconds / HolyDuration.getUnit(unit);
   }
 }
-
