@@ -28,7 +28,7 @@ export class HolyTime {
 
     timeZone = TIMEZONE_MAP[timeZone] ?? timeZone;
 
-    return new Date(date.toLocaleString('en-US', { timeZone }));
+    return new Date(new Date(date.toLocaleString('en-US', { timeZone })).setMilliseconds(0));
   }
 
   private static getUnit(unit: HumanUnit): ValueOf<typeof HolyTime.Units> {
