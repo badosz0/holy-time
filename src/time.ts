@@ -28,7 +28,7 @@ export class HolyTime {
 
     timeZone = TIMEZONE_MAP[timeZone] ?? timeZone;
 
-    return new Date(new Date(date.toLocaleString('en-US', { timeZone })).setMilliseconds(0));
+    return new Date(date.toLocaleString('en-US', { timeZone }));
   }
 
   private static getUnit(unit: HumanUnit): ValueOf<typeof HolyTime.Units> {
@@ -142,8 +142,11 @@ export class HolyTime {
   }
 
   public static startOf(unit: IntervalUnit, time: TimeResolvable = new Date(), timeZone?: TimeZone): HolyTime {
-    const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
-    const offset = HolyTime.between(date, time);
+    const resolved = HolyTime.resolveDate(time);
+    resolved.setMilliseconds(0);
+
+    const date = HolyTime.adjustToTimeZone(resolved, timeZone);
+    const offset = HolyTime.between(date, time) * (HolyTime.isBefore(date, time) ? 1 : -1);
 
     switch (unit) {
       case 'hour':
@@ -168,8 +171,11 @@ export class HolyTime {
   }
 
   public static endOf(unit: IntervalUnit, time: TimeResolvable = new Date(), timeZone?: TimeZone): HolyTime {
-    const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
-    const offset = HolyTime.between(date, time);
+    const resolved = HolyTime.resolveDate(time);
+    resolved.setMilliseconds(0);
+
+    const date = HolyTime.adjustToTimeZone(resolved, timeZone);
+    const offset = HolyTime.between(date, time) * (HolyTime.isBefore(date, time) ? 1 : -1);
 
     switch (unit) {
       case 'hour':
