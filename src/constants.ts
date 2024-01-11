@@ -22,7 +22,7 @@ export const RELATIVE_MAP: Record<number, string | ((milliseconds: number) => st
   [TimeUnits.DAY]: 'a day',
   [TimeUnits.DAY * 2]: (milliseconds) => `${Math.floor(milliseconds / TimeUnits.DAY)} days`,
   [TimeUnits.WEEK]: 'a week',
-  [TimeUnits.WEEK * 2]: (milliseconds) => `${Math.floor(milliseconds / TimeUnits.DAY)} weeks`,
+  [TimeUnits.WEEK * 2]: (milliseconds) => `${Math.floor(milliseconds / TimeUnits.WEEK)} weeks`,
   [TimeUnits.MONTH]: 'a month',
   [TimeUnits.MONTH * 2]: (milliseconds) => `${Math.floor(milliseconds / TimeUnits.MONTH)} months`,
   [TimeUnits.YEAR]: 'a year',
