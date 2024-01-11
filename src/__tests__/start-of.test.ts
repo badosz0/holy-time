@@ -21,7 +21,7 @@ describe('test startOf with timeZone', () => {
 
     expect(date.startOf('day', 'Europe/London').format('YYYY-MM-DD HH:mm:ss')).toBe('2023-01-01 00:00:00');
     expect(date.startOf('day', 'America/New_York').format('YYYY-MM-DD HH:mm:ss', 'Europe/London')).toBe('2022-12-31 05:00:00');
-    expect(date.startOf('day', 'Europe/Berlin').format('YYYY-MM-DD HH:mm:ss', 'America/New_York')).toBe('2022-12-31 20:00:00');
+    expect(date.startOf('day', 'Europe/Berlin').format('YYYY-MM-DD HH:mm:ss', 'America/New_York')).toBe('2022-12-31 18:00:00');
 
     expect(date.startOf('week', 'Europe/London').format('YYYY-MM-DD HH:mm:ss')).toBe('2023-01-01 00:00:00');
     expect(date.startOf('week', 'Europe/London').format('YYYY-MM-DD HH:mm:ss', 'America/New_York')).toBe('2022-12-31 19:00:00');

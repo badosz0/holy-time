@@ -48,7 +48,7 @@ describe('test HolyTime.format without timeZone', () => {
 
   it('should ignore unknown format & include it', () => {
     const date = new HolyTime(new Date('2023-01-01T00:00:00.000Z'));
-    expect(date.format('YYYY MM DD hh mm ss QQQ')).toBe('2023 01 01 00 00 00 QQQ');
+    expect(date.format('YYYY MM DD hh mm ss QQQ')).toBe('2023 01 01 12 00 00 QQQ');
   });
 
   it('should format date with mixed valid and invalid tokens', () => {
