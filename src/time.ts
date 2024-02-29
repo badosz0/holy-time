@@ -26,7 +26,7 @@ export class HolyTime {
       return date;
     }
 
-    timeZone = TIMEZONE_MAP[timeZone] ?? timeZone;
+    timeZone = TIMEZONE_MAP[timeZone as keyof typeof TIMEZONE_MAP] ?? timeZone;
 
     return new Date(date.toLocaleString('en-US', { timeZone }));
   }
