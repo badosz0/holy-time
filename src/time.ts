@@ -1,5 +1,5 @@
 import { ValueOf } from 'type-fest';
-import { FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TIMEZONES, TIMEZONE_MAP, TimeUnits, TimeZone } from './constants';
+import { DAY_NAMES, FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TIMEZONES, TIMEZONE_MAP, TimeUnits, TimeZone } from './constants';
 import { HumanUnit, IntervalUnit, TimeResolvable } from './types';
 import { HolyDuration } from './duration';
 
@@ -216,6 +216,7 @@ export class HolyTime {
       MMMM: MONTH_NAMES[date.getMonth()],
       D: date.getDate().toString(),
       DD: date.getDate().toString().padStart(2, '0'),
+      DDDD: DAY_NAMES[date.getDay()],
       HH: date.getHours().toString().padStart(2, '0'),
       H: date.getHours().toString(),
       hh: (date.getHours() % 12 ? (date.getHours() % 12) : 12).toString().padStart(2, '0'),
@@ -295,4 +296,3 @@ export class HolyTime {
     return HolyTime.relativeFromTo(time, this);
   }
 }
-

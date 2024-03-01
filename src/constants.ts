@@ -9,8 +9,9 @@ export const TimeUnits = {
   MILLISECOND: 1,
 } as const;
 
-export const FORMAT_REGEX = /\[(?<escaped>[^\]]+)]|Y{4}|Y{2}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|a|A/g;
+export const FORMAT_REGEX = /\[(?<escaped>[^\]]+)]|Y{4}|Y{2}|M{1,4}|D{1,4}|d{1,4}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|a|A/g;
 export const MONTH_NAMES = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+export const DAY_NAMES = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
 
 export const RELATIVE_MAP: Record<number, string | ((milliseconds: number) => string)> = {
   [TimeUnits.SECOND * 0]: 'a few seconds',
