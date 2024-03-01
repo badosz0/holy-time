@@ -66,7 +66,7 @@ describe('test HolyTime.between', () => {
     const start = new HolyTime(new Date('2023-01-01T00:00:00.000Z'));
     const end = new HolyTime(new Date('2023-01-01T01:00:00.000Z'));
 
-    expect(HolyTime.between(start, end)).toBe(HolyTime.Units.HOUR);
+    expect(HolyTime.between(start, end).in('milliseconds')).toBe(HolyTime.Units.HOUR);
   });
 });
 

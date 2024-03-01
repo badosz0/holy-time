@@ -109,8 +109,8 @@ export class HolyTime {
     return HolyTime.isLeapYear(HolyTime.resolveDate(time).getFullYear());
   }
 
-  public static between(timeA: TimeResolvable, timeB: TimeResolvable): number {
-    return Math.abs(HolyTime.resolveDate(timeA).getTime() - HolyTime.resolveDate(timeB).getTime());
+  public static between(timeA: TimeResolvable, timeB: TimeResolvable): HolyDuration {
+    return this.duration(Math.abs(HolyTime.resolveDate(timeA).getTime() - HolyTime.resolveDate(timeB).getTime()))
   }
 
   public static isAfter(timeA: TimeResolvable, timeB: TimeResolvable): boolean {
@@ -146,7 +146,7 @@ export class HolyTime {
     resolved.setMilliseconds(0);
 
     const date = HolyTime.adjustToTimeZone(resolved, timeZone);
-    const offset = HolyTime.between(date, time) * (HolyTime.isBefore(date, time) ? 1 : -1);
+    const offset = HolyTime.between(date, time).in('milliseconds') * (HolyTime.isBefore(date, time) ? 1 : -1);
 
     switch (unit) {
       case 'hour':
@@ -175,7 +175,7 @@ export class HolyTime {
     resolved.setMilliseconds(0);
 
     const date = HolyTime.adjustToTimeZone(resolved, timeZone);
-    const offset = HolyTime.between(date, time) * (HolyTime.isBefore(date, time) ? 1 : -1);
+    const offset = HolyTime.between(date, time).in('milliseconds') * (HolyTime.isBefore(date, time) ? 1 : -1);
 
     switch (unit) {
       case 'hour':
@@ -237,7 +237,7 @@ export class HolyTime {
   }
 
   public static relativeFromTo(timeA: TimeResolvable, timeB: TimeResolvable): string {
-    const differance = HolyTime.between(timeA, timeB);
+    const differance = HolyTime.between(timeA, timeB).in('milliseconds');
     const time = Math.max(
       ...Object
         .keys(RELATIVE_MAP)
