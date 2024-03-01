@@ -104,13 +104,6 @@ relativeFromTo(timeA: TimeResolvable, timeB: TimeResolvable): string;
 duration(amount: number, unit: HumanUnit): HolyDuration;
 ```
 
-
-## Planned
-
-- [ ] .set(unit, value)
-- [ ] .get(unit)
-- [ ] .toObject()
-
 ## License
 
 [MIT](https://tldrlegal.com/license/mit-license)

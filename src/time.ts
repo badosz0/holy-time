@@ -1,6 +1,6 @@
 import { ValueOf } from 'type-fest';
 import { DAY_NAMES, FORMAT_REGEX, MONTH_NAMES, RELATIVE_MAP, TIMEZONES, TIMEZONE_MAP, TimeUnits, TimeZone } from './constants';
-import { HumanUnit, IntervalUnit, TimeResolvable } from './types';
+import { GetUnit, HumanUnit, IntervalUnit, TimeResolvable } from './types';
 import { HolyDuration } from './duration';
 
 export class HolyTime {
@@ -266,6 +266,25 @@ export class HolyTime {
 
   public static duration(amount: number, unit: HumanUnit = 'milliseconds'): HolyDuration {
     return new HolyDuration(amount * HolyTime.getUnit(unit));
+  }
+
+  public get<T extends 'object' | GetUnit>(unit: T, timeZone?: TimeZone): T extends 'object' ? Record<GetUnit, number> : number {
+    const date = HolyTime.adjustToTimeZone(this.date, timeZone);
+
+    const object: Record<GetUnit, number>  = {
+      millisecond: date.getMilliseconds(),
+      second: date.getSeconds(),
+      minute: date.getMinutes(),
+      hour: date.getHours(),
+      day: date.getDate(),
+      week: Math.ceil(HolyTime.between(this.startOf('year', timeZone), date).in('weeks')),
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
+    }
+
+    return unit === 'object'
+      ? object 
+      : object[unit as GetUnit] as any
   }
 
   public getDate(): Date {
