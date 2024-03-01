@@ -29,10 +29,12 @@ HolyTime
   .subtract(4, 'minutes')
   .isWeekend()
 
-HolyTime.between(
-  HolyTime.add(HolyTime.startOf('day'), 10_000), 
-  HolyTime.now()
-)
+HolyTime
+  .between(
+    HolyTime.add(HolyTime.startOf('day'), 10_000), 
+    HolyTime.now()
+  )
+  .in('hours')
 
 HolyTime.max(1666224000000, HolyTime.next('year'))
 
@@ -82,7 +84,7 @@ in(amount: number, unit: HumanUnit): HolyTime
 add(time: TimeResolvable, amount: number, unit: HumanUnit): HolyTime;
 subtract(time: TimeResolvable, amount: number, unit: HumanUnit): HolyTime;
 
-between(timeA: TimeResolvable, timeB: TimeResolvable): number;
+between(timeA: TimeResolvable, timeB: TimeResolvable): HolyDuration;
 since(time: TimeResolvable): number;
 
 isLeapYear(time: TimeResolvable): boolean;
