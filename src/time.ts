@@ -6,6 +6,8 @@ import { HolyDuration } from './duration';
 export class HolyTime {
   public static Units = TimeUnits;
   public static TimeZones = TIMEZONES;
+  public static Days = DAY_NAMES;
+  public static Months = MONTH_NAMES;
   private date: Date;
 
   constructor(initialDate: TimeResolvable = new Date()) {
