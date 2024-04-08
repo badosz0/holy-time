@@ -459,11 +459,12 @@ export const TIMEZONES = [
   'Pacific/Truk',
   'Pacific/Wake',
   'Pacific/Wallis',
+  'UTC',
 ] as const;
 
 // TODO: add more timezones
 export const TIMEZONE_MAP = {
-  'UTC+0': 'Europe/London',
+  'UTC+0': 'UTC',
 } as const;
 
 export type TimeZone = typeof TIMEZONES[number] | keyof typeof TIMEZONE_MAP;

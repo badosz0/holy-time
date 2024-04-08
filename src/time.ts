@@ -112,7 +112,7 @@ export class HolyTime {
   }
 
   public static between(timeA: TimeResolvable, timeB: TimeResolvable): HolyDuration {
-    return this.duration(Math.abs(HolyTime.resolveDate(timeA).getTime() - HolyTime.resolveDate(timeB).getTime()))
+    return this.duration(Math.abs(HolyTime.resolveDate(timeA).getTime() - HolyTime.resolveDate(timeB).getTime()));
   }
 
   public static isAfter(timeA: TimeResolvable, timeB: TimeResolvable): boolean {
@@ -273,7 +273,7 @@ export class HolyTime {
   public get<T extends 'object' | GetUnit>(unit: T, timeZone?: TimeZone): T extends 'object' ? Record<GetUnit, number> : number {
     const date = HolyTime.adjustToTimeZone(this.date, timeZone);
 
-    const object: Record<GetUnit, number>  = {
+    const object: Record<GetUnit, number> = {
       millisecond: date.getMilliseconds(),
       second: date.getSeconds(),
       minute: date.getMinutes(),
@@ -282,11 +282,11 @@ export class HolyTime {
       week: Math.ceil(HolyTime.between(this.startOf('year', timeZone), date).in('weeks')),
       month: date.getMonth() + 1,
       year: date.getFullYear(),
-    }
+    };
 
     return unit === 'object'
-      ? object 
-      : object[unit as GetUnit] as any
+      ? object
+      : object[unit as GetUnit] as any;
   }
 
   public getDate(): Date {
