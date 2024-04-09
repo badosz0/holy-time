@@ -17,6 +17,10 @@
   "extends": [
       "plugin:unicorn/recommended"
   ],
+  "ignorePatterns": [
+      "dist/",
+      "node_modules/"
+  ],
   "rules": {
     "no-dupe-keys": "warn",
     "no-duplicate-case": "warn",

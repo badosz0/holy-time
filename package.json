@@ -8,8 +8,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test:watch": "TZ=UTC vitest watch -c ./src/vitest.config.ts",
-    "test": "TZ=UTC vitest run -c ./src/vitest.config.ts",
-    "build": "tsup src --dts --minify --format cjs,esm --out-dir dist"
+    "test": "TZ=UTC vitest run -c ./src/vitest.config.ts"
   },
   "author": "Bartosz Krol <m@badosz.com>",
   "license": "MIT",
@@ -27,8 +26,5 @@
     "type-fest": "^3.0.0",
     "typescript": "^4.8.3",
     "vitest": "^0.34.6"
-  },
-  "dependencies": {
-    "tsup": "^8.0.2"
   }
 }
