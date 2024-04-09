@@ -293,6 +293,45 @@ export class HolyTime {
       : object[unit as GetUnit] as any;
   }
 
+  // TODO: rename type?
+  public set(unit: GetUnit, value: number): this {
+    switch (unit) {
+      case 'millisecond':
+        this.date.setMilliseconds(value);
+        break;
+
+      case 'second':
+        this.date.setSeconds(value);
+        break;
+
+      case 'minute':
+        this.date.setMinutes(value);
+        break;
+
+      case 'hour':
+        this.date.setHours(value);
+        break;
+
+      case 'day':
+        this.date.setDate(value);
+        break;
+
+      case 'week':
+        this.date.setDate(value * 7);
+        break;
+
+      case 'month':
+        this.date.setMonth(value - 1);
+        break;
+
+      case 'year':
+        this.date.setFullYear(value);
+        break;
+    }
+
+    return this;
+  }
+
   public getDate(): Date {
     return this.date;
   }
