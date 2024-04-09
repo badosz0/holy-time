@@ -43,6 +43,10 @@ export class HolyTime {
     return HolyTime.Units[unitKey];
   }
 
+  public static isValid(time: TimeResolvable): boolean {
+    return !Number.isNaN(HolyTime.resolveDate(time).getTime());
+  }
+
   public static now(): HolyTime {
     return new HolyTime();
   }
