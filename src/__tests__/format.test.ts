@@ -88,3 +88,46 @@ describe('test HolyTime.format with timeZone', () => {
     expect(date.format('YYYY-MM-DD HH:mm:ss', 'Europe/Berlin')).toBe('2023-04-01 02:00:00');
   });
 });
+
+
+describe('test HolyDuration.format', () => {
+  it('should format 7s duration in short format', () => {
+    const duration = HolyTime.duration(7, 'seconds');
+    expect(duration.format('short')).toBe('7s');
+  })
+
+  it('should format 32ms duration in short format', () => {
+    const duration = HolyTime.duration(32);
+    expect(duration.format('short')).toBe('32ms');
+  })
+
+  it('should format 32y 3d 5ms duration in short format', () => {
+    const duration = HolyTime.duration(32, 'years').add(3, 'days').add(5);
+    expect(duration.format('short')).toBe('32y 3d 5ms');
+  })
+
+  it('should format 1y 3d duration in short format', () => {
+    const duration = HolyTime.duration(1, 'years').add(3, 'days');
+    expect(duration.format('short')).toBe('1y 3d');
+  })
+
+  it('should format 7s duration in long format', () => {
+    const duration = HolyTime.duration(7, 'seconds');
+    expect(duration.format('long')).toBe('7 seconds');
+  })
+
+  it('should format 32ms duration in long format', () => {
+    const duration = HolyTime.duration(32);
+    expect(duration.format('long')).toBe('32 milliseconds');
+  })
+
+  it('should format 32y 3d 5s duration in long format', () => {
+    const duration = HolyTime.duration(32, 'years').add(3, 'days').add(5, 'seconds');
+    expect(duration.format('long')).toBe('32 years, 3 days and 5 seconds');
+  })
+
+  it('should format 1y 3d duration in long format', () => {
+    const duration = HolyTime.duration(1, 'years').add(3, 'days');
+    expect(duration.format('long')).toBe('1 year and 3 days');
+  })
+})

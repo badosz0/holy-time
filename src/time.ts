@@ -135,8 +135,8 @@ export class HolyTime {
     return this.date.getTime() < HolyTime.resolveDate(time).getTime();
   }
 
-  public static since(time: TimeResolvable): number {
-    return Date.now() - HolyTime.resolveDate(time).getTime();
+  public static since(time: TimeResolvable): HolyDuration {
+    return new HolyDuration(Date.now() - HolyTime.resolveDate(time).getTime());
   }
 
   public static max(...times: TimeResolvable[]): HolyTime {
@@ -210,8 +210,12 @@ export class HolyTime {
     return HolyTime.endOf(unit, this, timeZone);
   }
 
-  public static format(time: TimeResolvable, format: string, timeZone?: TimeZone): string {
+  public static format(time: TimeResolvable, format: string | ((time: HolyTime) => string), timeZone?: TimeZone): string {
     const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
+
+    if (typeof format === 'function') {
+      return format(new HolyTime(date));
+    }
 
     const values: Record<string, string> = {
       YY: date.getFullYear().toString().slice(2, 4),
@@ -359,4 +363,9 @@ export class HolyTime {
   public getRelativeFrom(time: TimeResolvable): string {
     return HolyTime.relativeFromTo(time, this);
   }
+
+  public static getTimeZone(): TimeZone {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone as TimeZone;
+  }
 }
+

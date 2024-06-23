@@ -84,7 +84,7 @@ describe('test HolyTime.since', () => {
   it('should return time difference', () => {
     const date = new HolyTime(new Date('2023-01-01T01:02:03.000Z'));
 
-    expect(HolyTime.since(date)).toBe(Date.now() - date.getTime());
+    expect(HolyTime.since(date).in('seconds')).toBe((Date.now() - date.getTime()) / 1000);
   });
 });
 
@@ -105,4 +105,11 @@ describe('test HolyTime.min', () => {
     expect(HolyTime.min(date, date2)).toStrictEqual(date);
   });
 });
+
+describe('test HolyTime.getTimezone', () => {
+  it('should return timezone', () => {
+
+    expect(HolyTime.getTimeZone()).toBe('UTC');
+  });
+})
 

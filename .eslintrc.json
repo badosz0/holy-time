@@ -19,7 +19,8 @@
   ],
   "ignorePatterns": [
       "dist/",
-      "node_modules/"
+      "node_modules/",
+      "__tests__"
   ],
   "rules": {
     "no-dupe-keys": "warn",
