@@ -4,7 +4,6 @@ import { HumanUnit } from './types';
 import { TimeUnits } from './constants';
 
 const UNIT_KEYS = Object.keys(TimeUnits).map((key) => key.toLowerCase());
-const UNIT_VALUES = Object.values(TimeUnits);
 const listFormatter = new Intl.ListFormat('en-GB', { type: 'conjunction' });
 
 export class HolyDuration {
@@ -37,20 +36,26 @@ export class HolyDuration {
     return this.milliseconds / HolyDuration.getUnit(unit);
   }
 
-  public format(type: | 'short' | 'long' = 'short', maxSegments: number = Infinity): string {
-    let segments: number[] = [];
+  public format(
+    type: 'short' | 'long' = 'short',
+    allowedSegments: Partial<Record<HumanUnit, boolean>> = Object.fromEntries(
+      Object.keys(TimeUnits).map((key) => [ `${key.toLowerCase()}s`, true ]),
+    ),
+  ): string {
+    const segments: number[] = [];
     let { milliseconds } = this;
 
-    for (const unit of UNIT_VALUES) {
-      if (milliseconds >= unit) {
-        segments.push(Math.floor(milliseconds / unit));
-        milliseconds %= unit;
+    for (const [ name, value ] of Object.entries(TimeUnits)) {
+      if (!allowedSegments[`${name.toLowerCase()}s`]) {
+        segments.push(0);
+        milliseconds %= value;
+      } else if (milliseconds >= value) {
+        segments.push(Math.floor(milliseconds / value));
+        milliseconds %= value;
       } else {
         segments.push(0);
       }
     }
-
-    segments = segments.slice(0, segments.findIndex(Boolean) + maxSegments);
 
     switch (type) {
       case 'short': {
