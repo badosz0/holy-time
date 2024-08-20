@@ -211,7 +211,10 @@ export class HolyTime {
   }
 
   public static format(time: TimeResolvable, format: string | ((time: HolyTime) => string), timeZone?: TimeZone): string {
-    const date = HolyTime.adjustToTimeZone(HolyTime.resolveDate(time), timeZone);
+    const resolvedDate = HolyTime.resolveDate(time);
+    const utcDate = HolyTime.adjustToTimeZone(resolvedDate, 'UTC');
+    const date = HolyTime.adjustToTimeZone(resolvedDate, timeZone);
+    const timeZoneOffset = Math.round(this.between(date, utcDate).in('minutes')) * (this.isAfter(date, utcDate) ? -1 : +1);
 
     if (typeof format === 'function') {
       return format(new HolyTime(date));
@@ -237,9 +240,32 @@ export class HolyTime {
       mm: date.getMinutes().toString().padStart(2, '0'),
       s: date.getSeconds().toString(),
       ss: date.getSeconds().toString().padStart(2, '0'),
+      O: `GMT${this.formatTimeZoneOffset(timeZoneOffset, false)}`,
+      OO: `GMT${this.formatTimeZoneOffset(timeZoneOffset, true)}`,
+      TZ: TIMEZONE_MAP[timeZone as keyof typeof TIMEZONE_MAP] ?? timeZone ?? this.getTimeZone(),
     };
 
     return format.replace(FORMAT_REGEX, (match, group) => group ?? values[match] ?? '?');
+  }
+
+  private static formatTimeZoneOffset(offset: number, long: boolean): string {
+    const sign = offset > 0 ? '-' : '+';
+
+    const hours = long
+      ? this.formatWithLeadingZeros(Math.trunc(Math.abs(offset) / 60), 2)
+      : Math.trunc(Math.abs(offset) / 60);
+    const minutes = Math.abs(offset) % 60;
+
+    return minutes === 0 && !long
+      ? `${sign}${hours}`
+      : `${sign}${hours}:${this.formatWithLeadingZeros(minutes, 2)}`;
+  }
+
+  private static formatWithLeadingZeros(number: number, length: number): string {
+    const sign = number < 0 ? '-' : '';
+    const output = Math.abs(number).toString().padStart(length, '0');
+
+    return `${sign}${output}`;
   }
 
   public format(format: string, timeZone?: TimeZone): string {
