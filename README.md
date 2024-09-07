@@ -1,10 +1,12 @@
 ![holyTime](https://github.com/tomcru/holy-time/assets/35841182/51051dd9-d0db-4bf7-9cbd-21bcc8c98fd5)
 
-[![License: MIT][license-image]][license-url]
-[![NPM version][npm-image]][npm-url]
-[![JSR version][jsr-image]][jsr-url]
+# Holy Time
 
-> Yet another (type-safe) date time library
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![NPM version](https://img.shields.io/npm/v/holy-time.svg?style=flat-square)](https://npmjs.org/package/holy-time)
+[![JSR version](https://jsr.io/badges/@badosz/holy-time?style=flat-square)](https://jsr.io/@badosz/holy-time)
+
+Yet another (type-safe) date time library.
 
 ## Installation
 
@@ -18,6 +20,10 @@ OR
 $ yarn add holy-time
 ```
 
+## Resources
+
+- [Documentation](https://jsr.io/@badosz/holy-time/doc/~/default)
+
 ## Examples
 ```ts
 import HolyTime from 'holy-time'
@@ -30,7 +36,7 @@ HolyTime
 
 HolyTime
   .between(
-    HolyTime.add(HolyTime.startOf('day'), 10_000), 
+    HolyTime.add(HolyTime.startOf('day'), 2, 'hours'), 
     HolyTime.now()
   )
   .in('hours')
@@ -50,13 +56,3 @@ HolyTime
   .add(30, 'minutes')
   .in('seconds')
 
-## License
-
-[MIT](https://tldrlegal.com/license/mit-license)
-
-[license-image]: https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square
-[license-url]: https://opensource.org/licenses/MIT
-[npm-image]: https://img.shields.io/npm/v/holy-time.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/holy-time
-[jsr-image]: https://jsr.io/badges/@badosz/holy-time?style=flat-square
-[jsr-url]: https://jsr.io/@badosz/holy-time
