@@ -1,9 +1,8 @@
 ![holyTime](https://github.com/tomcru/holy-time/assets/35841182/51051dd9-d0db-4bf7-9cbd-21bcc8c98fd5)
 
-<h1>Holy Time</h1>
-<a href="https://www.npmjs.com/package/holy-time"><img src="https://img.shields.io/npm/v/holy-time.svg?style=flat" /></a>
-<br>
-<br>
+[![License: MIT][license-image]][license-url]
+[![NPM version][npm-image]][npm-url]
+[![JSR version][jsr-image]][jsr-url]
 
 > Yet another (type-safe) date time library
 
@@ -51,61 +50,13 @@ HolyTime
   .add(30, 'minutes')
   .in('seconds')
 
-```
-## Instance Methods
-```ts
-add(amount: number, unit: HumanUnit): this;
-subtract(amount: number, unit: HumanUnit): this;
-
-isLeapYear(): boolean;
-isWeekend(): boolean;
-isAfter(time: TimeResolvable): boolean;
-isBefore(time: TimeResolvable): boolean;
-isEqual(time: TimeResolvable): boolean;
-
-startOf(unit: IntervalUnit, timeZone?: TimeZone): HolyTime;
-endOf(unit: IntervalUnit, timeZone?: TimeZone): HolyTime;
-next(unit: IntervalUnit, timeZone?: TimeZone): HolyTime;
-
-getDate(): Date;
-getTime(): number;
-getISOString(): string;
-
-format(format: string, timeZone?: TimeZone): string;
-getRelativeTo(time: TimeResolvable): string;
-getRelativeFrom(time: TimeResolvable): string;
-```
-
-## Static Methods
-```ts
-now(): HolyTime;
-in(amount: number, unit: HumanUnit): HolyTime
-
-add(time: TimeResolvable, amount: number, unit: HumanUnit): HolyTime;
-subtract(time: TimeResolvable, amount: number, unit: HumanUnit): HolyTime;
-
-between(timeA: TimeResolvable, timeB: TimeResolvable): HolyDuration;
-since(time: TimeResolvable): number;
-
-isLeapYear(time: TimeResolvable): boolean;
-isWeekend(time: TimeResolvable): boolean;
-isAfter(timeA: TimeResolvable, timeB: TimeResolvable): boolean;
-isBefore(timeA: TimeResolvable, timeB: TimeResolvable): boolean;
-isEqual(timeA: TimeResolvable, timeB: TimeResolvable): boolean;
-
-max(...times: TimeResolvable[]): HolyTime;
-min(...times: TimeResolvable[]): HolyTime;
-
-startOf(unit: IntervalUnit, time: TimeResolvable, timeZone?: TimeZone): HolyTime;
-endOf(unit: IntervalUnit, time: TimeResolvable, timeZone?: TimeZone): HolyTime;
-next(unit: IntervalUnit, time: TimeResolvable, timeZone?: TimeZone): HolyTime;
-
-format(time: TimeResolvable, format: string, timeZone?: TimeZone): string;
-relativeFromTo(timeA: TimeResolvable, timeB: TimeResolvable): string;
-
-duration(amount: number, unit: HumanUnit): HolyDuration;
-```
-
 ## License
 
 [MIT](https://tldrlegal.com/license/mit-license)
+
+[license-image]: https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square
+[license-url]: https://opensource.org/licenses/MIT
+[npm-image]: https://img.shields.io/npm/v/holy-time.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/holy-time
+[jsr-image]: https://jsr.io/badges/@badosz/holy-time?style=flat-square
+[jsr-url]: https://jsr.io/@badosz/holy-time

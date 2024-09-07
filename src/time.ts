@@ -119,13 +119,6 @@ export class HolyTime {
     return HolyTime.isWeekend(this);
   }
 
-  /**
-   * Determines if a given year is a leap year.
-   *
-   * A leap year is a year that is divisible by 4, except for end-of-century years,
-   * which must be divisible by 400. This means that the year 2000 was a leap year,
-   * although 1900 was not.
-   */
   public static isLeapYear(year: number): boolean {
     if (
       typeof year !== 'number' ||
