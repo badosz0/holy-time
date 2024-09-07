@@ -1,5 +1,5 @@
-import { TimeUnits } from './constants';
-import { HolyTime } from './time';
+import type { TimeUnits } from './constants';
+import type { HolyTime } from './time';
 
 export type TimeResolvable = HolyTime | Date | number | string;
 export type HumanUnit = `${Lowercase<keyof typeof TimeUnits>}s`;

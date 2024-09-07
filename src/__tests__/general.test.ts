@@ -66,7 +66,9 @@ describe('test HolyTime.between', () => {
     const start = new HolyTime(new Date('2023-01-01T00:00:00.000Z'));
     const end = new HolyTime(new Date('2023-01-01T01:00:00.000Z'));
 
-    expect(HolyTime.between(start, end).in('milliseconds')).toBe(HolyTime.Units.HOUR);
+    expect(HolyTime.between(start, end).in('milliseconds')).toBe(
+      HolyTime.Units.HOUR,
+    );
   });
 });
 
@@ -84,7 +86,9 @@ describe('test HolyTime.since', () => {
   it('should return time difference', () => {
     const date = new HolyTime(new Date('2023-01-01T01:02:03.000Z'));
 
-    expect(HolyTime.since(date).in('seconds')).toBe((Date.now() - date.getTime()) / 1000);
+    expect(HolyTime.since(date).in('seconds')).toBe(
+      (Date.now() - date.getTime()) / 1000,
+    );
   });
 });
 
@@ -108,8 +112,6 @@ describe('test HolyTime.min', () => {
 
 describe('test HolyTime.getTimezone', () => {
   it('should return timezone', () => {
-
     expect(HolyTime.getTimeZone()).toBe('UTC');
   });
-})
-
+});

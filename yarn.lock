@@ -198,6 +198,25 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
+"@biomejs/biome@1.8.3":
+  version "1.8.3"
+  resolved "https://registry.npmjs.org/@biomejs/biome/-/biome-1.8.3.tgz"
+  integrity sha512-/uUV3MV+vyAczO+vKrPdOW0Iaet7UnJMU4bNMinggGJTAnBPjCoLEYcyYtYHNnUNYlv4xZMH6hVIQCAozq8d5w==
+  optionalDependencies:
+    "@biomejs/cli-darwin-arm64" "1.8.3"
+    "@biomejs/cli-darwin-x64" "1.8.3"
+    "@biomejs/cli-linux-arm64" "1.8.3"
+    "@biomejs/cli-linux-arm64-musl" "1.8.3"
+    "@biomejs/cli-linux-x64" "1.8.3"
+    "@biomejs/cli-linux-x64-musl" "1.8.3"
+    "@biomejs/cli-win32-arm64" "1.8.3"
+    "@biomejs/cli-win32-x64" "1.8.3"
+
+"@biomejs/cli-darwin-arm64@1.8.3":
+  version "1.8.3"
+  resolved "https://registry.npmjs.org/@biomejs/cli-darwin-arm64/-/cli-darwin-arm64-1.8.3.tgz"
+  integrity sha512-9DYOjclFpKrH/m1Oz75SSExR8VKvNSSsLnVIqdnKexj6NwmiMlKk94Wa1kZEdv6MCOHGHgyyoV57Cw8WzL5n3A==
+
 "@esbuild/darwin-arm64@0.19.8":
   version "0.19.8"
   resolved "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.19.8.tgz"
