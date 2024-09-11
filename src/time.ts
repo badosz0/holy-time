@@ -176,6 +176,22 @@ export class HolyTime {
     return this.date.getTime() < HolyTime.resolveDate(time).getTime();
   }
 
+  public static isFuture(time: TimeResolvable): boolean {
+    return HolyTime.isAfter(time, new Date());
+  }
+
+  public isFuture(): boolean {
+    return this.isAfter(new Date());
+  }
+
+  public static isPast(time: TimeResolvable): boolean {
+    return HolyTime.isBefore(time, new Date());
+  }
+
+  public isPast(): boolean {
+    return this.isBefore(new Date());
+  }
+
   public static since(time: TimeResolvable): HolyDuration {
     return new HolyDuration(Date.now() - HolyTime.resolveDate(time).getTime());
   }
