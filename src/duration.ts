@@ -1,6 +1,6 @@
 import type { ValueOf } from 'type-fest';
 import { HolyTime } from './time';
-import type { HumanUnit } from './types';
+import type { DurationResolvable, HumanUnit } from './types';
 import { TimeUnits } from './constants';
 
 const UNIT_KEYS = Object.keys(TimeUnits).map((key) => key.toLowerCase());
@@ -9,8 +9,8 @@ const listFormatter = new Intl.ListFormat('en-GB', { type: 'conjunction' });
 export class HolyDuration {
   private milliseconds: number;
 
-  constructor(time: number) {
-    this.milliseconds = time;
+  constructor(duration: DurationResolvable) {
+    this.milliseconds = HolyDuration.resolve(duration);
   }
 
   private static getUnit(unit: HumanUnit): ValueOf<typeof HolyTime.Units> {
@@ -25,17 +25,42 @@ export class HolyDuration {
     return HolyTime.Units[unitKey];
   }
 
-  public add(amount: number, unit: HumanUnit = 'milliseconds'): this {
-    this.milliseconds += amount * HolyDuration.getUnit(unit);
+  public add(duration: HolyDuration): this;
+  public add(amount: number, unit: HumanUnit): this;
+  public add(
+    amount: HolyDuration | number,
+    unit: HumanUnit = 'milliseconds',
+  ): this {
+    if (typeof amount === 'number') {
+      this.milliseconds += amount * HolyDuration.getUnit(unit);
+    } else {
+      this.milliseconds += this.in('milliseconds');
+    }
+
     return this;
   }
 
-  public subtract(amount: number, unit: HumanUnit = 'milliseconds'): this {
-    return this.add(-amount, unit);
+  public subtract(duration: HolyDuration): this;
+  public subtract(amount: number, unit: HumanUnit): this;
+  public subtract(
+    amount: HolyDuration | number,
+    unit: HumanUnit = 'milliseconds',
+  ): this {
+    if (typeof amount === 'number') {
+      this.milliseconds -= amount * HolyDuration.getUnit(unit);
+    } else {
+      this.milliseconds -= this.in('milliseconds');
+    }
+
+    return this;
   }
 
   public in(unit: HumanUnit): number {
     return this.milliseconds / HolyDuration.getUnit(unit);
+  }
+
+  public clone(): HolyDuration {
+    return new HolyDuration(this.in('milliseconds'));
   }
 
   public format(
@@ -81,5 +106,11 @@ export class HolyDuration {
         );
       }
     }
+  }
+
+  private static resolve(duration: DurationResolvable): number {
+    return duration instanceof HolyDuration
+      ? duration.in('milliseconds')
+      : duration;
   }
 }

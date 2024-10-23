@@ -1,12 +1,13 @@
 {
   "name": "holy-time",
-  "version": "5.5.0",
+  "version": "6.0.0",
   "description": "Utility functions",
   "repository": "Yet another (type-safe) date time library",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
+    "lint": "biome check --write --unsafe",
     "test:watch": "TZ=UTC vitest watch -c ./src/vitest.config.ts",
     "test": "TZ=UTC vitest run -c ./src/vitest.config.ts"
   },
