@@ -1,5 +1,5 @@
 {
   "name": "@badosz/holy-time",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "exports": "./src/index.ts"
 }

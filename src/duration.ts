@@ -26,7 +26,7 @@ export class HolyDuration {
   }
 
   public add(duration: HolyDuration): this;
-  public add(amount: number, unit: HumanUnit): this;
+  public add(amount: number, unit?: HumanUnit): this;
   public add(
     amount: HolyDuration | number,
     unit: HumanUnit = 'milliseconds',
@@ -34,14 +34,14 @@ export class HolyDuration {
     if (typeof amount === 'number') {
       this.milliseconds += amount * HolyDuration.getUnit(unit);
     } else {
-      this.milliseconds += this.in('milliseconds');
+      this.milliseconds += amount.in('milliseconds');
     }
 
     return this;
   }
 
   public subtract(duration: HolyDuration): this;
-  public subtract(amount: number, unit: HumanUnit): this;
+  public subtract(amount: number, unit?: HumanUnit): this;
   public subtract(
     amount: HolyDuration | number,
     unit: HumanUnit = 'milliseconds',
@@ -49,7 +49,7 @@ export class HolyDuration {
     if (typeof amount === 'number') {
       this.milliseconds -= amount * HolyDuration.getUnit(unit);
     } else {
-      this.milliseconds -= this.in('milliseconds');
+      this.milliseconds -= amount.in('milliseconds');
     }
 
     return this;
